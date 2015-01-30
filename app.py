@@ -12,6 +12,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
 
+from models import init_db
+
 
 # Options
 define('app_path', os.path.dirname(os.path.abspath(__file__)))
@@ -31,10 +33,9 @@ class Application(tornado.web.Application):
             'debug': True,
         }
         super(Application, self).__init__(handlers, **settings)
-        # tornado.web.Application.__init__(self, handlers, **settings)
 
-        engine = create_engine(options.db_path, convert_unicode=True)
-
+        engine = create_engine(options.db_path, echo=True)
+        init_db(engine)
         self.db = scoped_session(sessionmaker(bind=engine))
 
 
