@@ -4,6 +4,7 @@
 from sqlalchemy import Column
 from sqlalchemy import String
 from sqlalchemy import Integer
+from sqlalchemy import Boolean
 from . import BaseModel
 
 
@@ -14,6 +15,8 @@ class User(BaseModel):
     name = Column(String(20), nullable=False)
     phone = Column(String(11), nullable=False)
     password = Column(String(20), nullable=False)
+    email = Column(String)
+    deleted = Column(Boolean, default=False)
 
     def __init__(self, name, phone, password):
         self.name = name
